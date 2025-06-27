@@ -19,7 +19,7 @@ class ContactSeeder extends Seeder
         for ($i = 0; $i < 50; $i++) {
             Contact::create([
                 'name' => $faker->name(),
-                'contact' => $faker->phoneNumber(),
+                'contact' => $faker->numberBetween(000000000, 999999999),
                 'email' => $faker->unique()->safeEmail(),
             ]);
         }
