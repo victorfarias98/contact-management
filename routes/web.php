@@ -1,18 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('contacts.index');
 });
+
+Route::resource('contacts', ContactController::class)->middleware('auth')->except(['index', 'show']);
+Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
+Route::get('/contacts/{contact}', [ContactController::class, 'show'])->name('contacts.show');
+Auth::routes();
+
+Route::get('/home', function () {
+    return redirect()->route('contacts.index');
+})->name('home');
+
